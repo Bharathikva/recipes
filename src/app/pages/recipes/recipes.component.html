@@ -79,23 +79,56 @@
   <!-- Loading Spinner -->
   <app-loading *ngIf="loading"></app-loading>
 
-  <!-- Recipe Cards Grid -->
-  <div
-    *ngIf="!loading && meals.length > 0"
-    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-2 sm:px-4 py-10"
-  >
-    <app-meal-card
-      *ngFor="let meal of meals"
-      [meal]="meal"
-      [showCategory]="false"
-    ></app-meal-card>
-  </div>
+<!-- Recipe Cards Grid -->
+<div
+  *ngIf="!loading && paginatedMeals.length > 0"
+  class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-2 sm:px-4 py-10"
+>
+  <app-meal-card
+    *ngFor="let meal of paginatedMeals"
+    [meal]="meal"
+    [showCategory]="false"
+  ></app-meal-card>
+</div>
 
-  <!-- No Data Found Message -->
-  <div
-    *ngIf="!loading && (!meals || meals.length === 0)"
-    class="text-center text-gray-500 mt-6 text-sm"
+<!-- No Data Found Message -->
+<div
+  *ngIf="!loading && (!paginatedMeals || paginatedMeals.length === 0)"
+  class="text-center text-gray-500 mt-6 text-sm"
+>
+  No recipes found for this category.
+</div>
+
+<!-- Pagination Controls -->
+<div *ngIf="!loading && totalPages > 1" class="flex justify-center items-center mt-8 space-x-2">
+  <button
+    (click)="prevPage()"
+    [disabled]="currentPage === 1"
+    class="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 text-sm"
   >
-    No recipes found for this category.
-  </div>
+    Previous
+  </button>
+
+  <ng-container *ngFor="let page of [].constructor(totalPages); let i = index">
+    <button
+      (click)="goToPage(i + 1)"
+      [ngClass]="{
+        'bg-purple-600 text-white': currentPage === i + 1,
+        'bg-gray-200': currentPage !== i + 1
+      }"
+      class="px-3 py-1 rounded hover:bg-gray-300 text-sm"
+    >
+      {{ i + 1 }}
+    </button>
+  </ng-container>
+
+  <button
+    (click)="nextPage()"
+    [disabled]="currentPage === totalPages"
+    class="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 text-sm"
+  >
+    Next
+  </button>
+</div>
+
 </div>
