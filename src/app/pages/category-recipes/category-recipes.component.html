@@ -1,0 +1,15 @@
+<div class="min-h-screen px-6 py-10 text-[#5e2a0a]" [@listAnimation]="apptDashboard">
+    <div class="flex justify-center">
+      <app-page-title [title]="categoryName"></app-page-title>
+    </div>
+    
+  
+    <app-loading *ngIf="loading"></app-loading>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 py-10">
+      <app-meal-card
+      *ngFor="let meal of meals"
+      [meal]="meal"
+      [showCategory]="true"
+    ></app-meal-card>
+    </div>
+  </div>

@@ -1,0 +1,20 @@
+<div class="px-4 sm:px-6 md:px-10 pt-6 sm:pt-10" [@listAnimation]="apptDashboard">
+    <h2 class="font-drama-regular text-3xl sm:text-4xl mb-6 text-center sm:text-left">
+      Your Favorite Recipes
+    </h2>
+  
+    <!-- Loading and Empty States -->
+    <div *ngIf="isLoading" class="text-center text-lg text-gray-500">Loading...</div>
+  
+    <div *ngIf="!isLoading && meals.length === 0" class="text-center text-lg text-gray-500">
+      No favorite meals yet.
+    </div>
+  
+    <!-- Meals Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 animate-fadeIn">
+      <ng-container *ngFor="let meal of meals">
+        <app-meal-card [meal]="meal" [showCategory]="true"></app-meal-card>
+      </ng-container>
+    </div>
+  </div>
+  

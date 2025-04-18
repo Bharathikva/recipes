@@ -1,0 +1,71 @@
+<div class="px-6 py-10">
+  <app-loading *ngIf="loading"></app-loading>
+
+  <div class="relative max-w-7xl mx-auto px-10">
+    <div
+      #carouselContainer
+      class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth -ml-2"
+      style="overflow: hidden"
+    >
+      <div
+        *ngFor="let cat of categories; let i = index"
+        class="flex flex-col items-center justify-center min-w-[calc(33.33%-1.5rem)] sm:min-w-[calc(25%-1.5rem)] md:min-w-[calc(20%-1.5rem)] lg:min-w-[calc(16.66%-1.5rem)] snap-start"
+      >
+        <div class="relative w-24 h-24 rounded-full overflow-hidden shadow-md">
+          <img
+            [src]="cat.strCategoryThumb"
+            [alt]="cat.strCategory"
+            [routerLink]="['/category', cat.strCategory]"
+            routerLinkActive="router-link-active"
+            class="w-full h-full object-cover cursor-pointer"
+          />
+        </div>
+        <h2
+          class="font-bold mt-2 text-center"
+          style="text-transform: uppercase"
+        >
+          {{ cat.strCategory }}
+        </h2>
+      </div>
+    </div>
+
+    <button
+      *ngIf="categories.length > 0"
+      class="absolute left-1 top-1/2 -translate-y-1/2 bg-gray-100 text-gray-700 rounded-full shadow-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+      (click)="scrollLeft()"
+    >
+      <svg
+        class="w-5 h-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"
+        />
+      </svg>
+    </button>
+    <button
+      *ngIf="categories.length > 0"
+      class="absolute right-1 top-1/2 -translate-y-1/2 bg-gray-100 text-gray-700 rounded-full shadow-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+      (click)="scrollRight()"
+    >
+      <svg
+        class="w-5 h-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5l7 7-7 7"
+        />
+      </svg>
+    </button>
+  </div>
+</div>

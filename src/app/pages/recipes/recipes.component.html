@@ -1,0 +1,101 @@
+<div class="px-4 sm:px-6 lg:px-10 py-6" [@listAnimation]="apptDashboard">
+  <!-- Page Title -->
+  <div class="flex justify-center">
+    <app-page-title title="ALL RECIPES"></app-page-title>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6 mb-8">
+    <div class="flex items-center w-full sm:w-2/3 md:w-1/2">
+      <div class="relative w-full">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          (input)="onSearch()"
+          class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          placeholder="Search our recipes"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Category Carousel (Unchanged Functionality) -->
+  <div class="relative max-w-7xl mx-auto py-5 px-2 sm:px-4">
+    <div
+      #carouselContainer
+      class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth -ml-2"
+      style="overflow: hidden"
+    >
+      <div
+        *ngFor="let cat of categories"
+        (click)="onCategorySelect(cat.strCategory)"
+        class="flex flex-col items-center justify-center min-w-[calc(25%-0.75rem)] sm:min-w-[calc(20%-0.75rem)] snap-start cursor-pointer"
+      >
+        <div
+          class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden shadow-md border-4"
+          [ngClass]="{
+            'border-purple-600': selectedCategory === cat.strCategory,
+            'border-transparent': selectedCategory !== cat.strCategory
+          }"
+        >
+          <img
+            [src]="cat.strCategoryThumb"
+            [alt]="cat.strCategory"
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <h2 class="text-xs sm:text-sm font-bold mt-2 text-center uppercase">
+          {{ cat.strCategory }}
+        </h2>
+      </div>
+    </div>
+
+    <!-- Carousel Arrows -->
+    <button
+      *ngIf="categories.length > 0"
+      class="absolute left-1 top-1/2 -translate-y-1/2 bg-gray-100 text-gray-700 rounded-full shadow-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+      (click)="scrollLeft()"
+    >
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+    <button
+      *ngIf="categories.length > 0"
+      class="absolute right-1 top-1/2 -translate-y-1/2 bg-gray-100 text-gray-700 rounded-full shadow-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+      (click)="scrollRight()"
+    >
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Loading Spinner -->
+  <app-loading *ngIf="loading"></app-loading>
+
+  <!-- Recipe Cards Grid -->
+  <div
+    *ngIf="!loading && meals.length > 0"
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-2 sm:px-4 py-10"
+  >
+    <app-meal-card
+      *ngFor="let meal of meals"
+      [meal]="meal"
+      [showCategory]="false"
+    ></app-meal-card>
+  </div>
+
+  <!-- No Data Found Message -->
+  <div
+    *ngIf="!loading && (!meals || meals.length === 0)"
+    class="text-center text-gray-500 mt-6 text-sm"
+  >
+    No recipes found for this category.
+  </div>
+</div>

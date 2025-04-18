@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+.logo {
+  font-family: "Glass Antiqua", cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 28px;
+  color: #5c2a4a;
+}
+.logo .of {
+  font-family: "Glass Antiqua", cursive;
+  font-weight: 400;
+  font-size: 24px;
+  color: gray;
+}
+
+.filter {
+  filter: brightness(0.95) contrast(1.15) saturate(1.1) sepia(0.1);
+}
+
+.font-arvo-bold {
+  font-family: "Arvo", serif;
+  font-weight: 700;
+  font-style: normal;
+  word-spacing: 2px;
+}
+
+.font-drama-regular {
+  font-family: "Drama Regular";
+  font-size: 3.5rem;
+  color: rgb(115 64 96 / 1);
+  white-space: nowrap;
+  text-transform: lowercase;
+}
+
+@layer utilities {
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.8s ease-in-out both;
+  }
+}
+
+@font-face {
+  font-family: 'Drama Regular';
+  src: url('/assets/fonts/Drama-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

@@ -1,0 +1,15 @@
+.meal-name-overlay-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 100%); /* Dark to transparent gradient */
+    color: white; /* Ensure text is readable on the dark background */
+    padding: 16px; /* Adjust as needed for spacing */
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+  }
+  
+  .meal-name {
+    /* Style your meal name text here if needed */
+    font-weight: bold;
+  }

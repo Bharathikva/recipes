@@ -1,0 +1,401 @@
+<header class="bg-white sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+      <!-- Logo -->
+      <div class="logo">A Pinch <span class="of">of</span> Flavor</div>
+
+      <!-- Nav Links -->
+      <nav class="hidden md:flex items-center space-x-10">
+        <a
+          routerLink="/"
+          class="text-black font-extrabold hover:text-purple-800"
+          >HOME</a
+        >
+        <a
+          routerLink="/about"
+          class="text-black font-extrabold hover:text-purple-800"
+          >ABOUT</a
+        >
+        <a
+          routerLink="/recipes"
+          class="text-black font-extrabold hover:text-purple-800"
+          >RECIPES</a
+        >
+        <a
+          routerLink="/country"
+          class="text-black font-extrabold hover:text-purple-800"
+          >WORLD CUISINE</a
+        >
+
+        <ng-container *ngIf="user; else showAuthLinks">
+          <div class="relative" (click)="toggleDropdown()">
+            <div class="flex items-center gap-2 cursor-pointer">
+              <img
+                *ngIf="user.profile; else defaultAvatar"
+                [src]="user.profile"
+                alt="Profile"
+                class="w-10 h-10 rounded-full object-cover border"
+              />
+              <ng-template #defaultAvatar>
+                <svg
+                  class="w-10 h-10 text-gray-400"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                  />
+                </svg>
+              </ng-template>
+              <span class="font-bold text-purple-800">{{ user.name }}</span>
+            </div>
+
+            <!-- Dropdown -->
+            <div
+              *ngIf="showDropdown"
+              class="absolute right-0 mt-2 w-40 bg-white rounded-xl shadow-lg border z-50"
+            >
+              <a
+                routerLink="/profile"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-t-xl"
+              >
+                View Profile
+              </a>
+              <button
+                (click)="logout()"
+                class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 rounded-b-xl"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-template #showAuthLinks>
+          <button
+            (click)="openLoginModal()"
+            class="text-black font-extrabold hover:text-purple-800"
+          >
+            Login
+          </button>
+          <button
+            (click)="openSignupModal()"
+            class="text-black font-extrabold hover:text-purple-800"
+          >
+            Signup
+          </button>
+        </ng-template>
+      </nav>
+
+      <!-- Mobile Menu Icon -->
+      <div class="md:hidden flex items-center space-x-4">
+        <button
+          (click)="toggleLanguage()"
+          class="text-purple-800 animate-bounce"
+        >
+          <i class="material-icons">translate</i>
+        </button>
+        <button
+          id="mobile-menu-button"
+          class="text-purple-800 focus:outline-none"
+        >
+          <svg
+            class="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Nav -->
+  <div id="mobile-menu" class="hidden md:hidden px-4 pb-4">
+    <a
+      routerLink="/"
+      class="block py-2 font-extrabold text-black hover:text-purple-800"
+      >HOME</a
+    >
+    <a
+      routerLink="/about"
+      class="block py-2 font-extrabold text-black hover:text-purple-800"
+      >ABOUT</a
+    >
+    <a
+      routerLink="/recipes"
+      class="block py-2 font-extrabold text-black hover:text-purple-800"
+      >RECIPES</a
+    >
+    <a
+      routerLink="/country"
+      class="block py-2 font-extrabold text-black hover:text-purple-800"
+      >WORLD CUISINE</a
+    >
+
+    <ng-container *ngIf="user; else showAuthLinks">
+      <div class="relative" (click)="toggleDropdown()">
+        <div class="flex items-center gap-2 cursor-pointer">
+          <img
+            *ngIf="user.profile; else defaultAvatar"
+            [src]="user.profile"
+            alt="Profile"
+            class="w-10 h-10 rounded-full object-cover border"
+          />
+          <ng-template #defaultAvatar>
+            <svg
+              class="w-10 h-10 text-gray-400"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+              />
+            </svg>
+          </ng-template>
+          <span class="font-bold text-purple-800">{{ user.name }}</span>
+        </div>
+
+        <!-- Dropdown -->
+        <div
+          *ngIf="showDropdown"
+          class="absolute right-0 mt-2 w-40 bg-white rounded-xl shadow-lg border z-50"
+        >
+          <a
+            routerLink="/profile"
+            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-t-xl"
+          >
+            View Profile
+          </a>
+          <button
+            (click)="logout()"
+            class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 rounded-b-xl"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #showAuthLinks>
+      <button
+        (click)="openLoginModal()"
+        class="text-black font-extrabold hover:text-purple-800"
+      >
+        Login
+      </button>
+      <button
+        (click)="openSignupModal()"
+        class="text-black font-extrabold hover:text-purple-800"
+      >
+        Signup
+      </button>
+    </ng-template>
+  </div>
+
+  <!-- Login Modal -->
+  <!-- Login Modal -->
+  <div
+    id="login-modal"
+    class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+    (click)="closeLoginModal()"
+  >
+    <div
+      class="bg-white p-8 rounded-2xl shadow-2xl w-96 relative animate-fadeIn"
+      (click)="$event.stopPropagation()"
+    >
+      <h2 class="text-3xl font-arvo-bold text-center text-[#5c2a4a] mb-6">
+        Login
+      </h2>
+
+      <!-- Login Form -->
+      <form (ngSubmit)="onLogin(email.value, password.value)" class="space-y-4">
+        <input
+          #email
+          type="email"
+          placeholder="Email"
+          class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-[#5c2a4a]"
+          required
+        />
+        <input
+          #password
+          type="password"
+          placeholder="Password"
+          class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-[#5c2a4a]"
+          required
+        />
+        <button
+          type="submit"
+          class="w-full bg-[#5c2a4a] text-white py-3 rounded-md hover:bg-[#7c3c64] transition"
+        >
+          Login
+        </button>
+      </form>
+
+      <!-- Social Buttons -->
+      <div class="flex justify-center gap-4 mt-6">
+        <!-- Google -->
+        <button
+          class="bg-red-600 text-white p-3 rounded-full hover:bg-red-700 transition"
+          aria-label="Google Login"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 48 48"
+            class="w-5 h-5 fill-white"
+          >
+            <path
+              d="M44.5 20H24v8.5h11.9C34.3 33.5 29.7 37 24 37c-7 0-13-6-13-13s6-13 13-13c3.3 0 6.3 1.2 8.6 3.4l6.4-6.4C34.4 4.5 29.5 2 24 2 12.3 2 2.5 11.8 2.5 23.5S12.3 45 24 45c11.2 0 21.5-8.5 21.5-21.5 0-1.6-.2-3.2-.5-4.5z"
+            />
+          </svg>
+        </button>
+
+        <!-- Facebook -->
+        <button
+          class="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition"
+          aria-label="Facebook Login"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 32 32"
+            class="w-5 h-5 fill-white"
+          >
+            <path
+              d="M19 6h5V0h-5c-5 0-8 3.3-8 8v4H6v6h5v14h6V18h5l1-6h-6v-3c0-1.7.6-3 3-3z"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Switch to Signup -->
+      <div class="text-center text-sm mt-4 text-gray-600">
+        Don’t have an account?
+        <span
+          class="text-[#5c2a4a] font-medium cursor-pointer"
+          (click)="closeLoginModal(); openSignupModal()"
+        >
+          Sign up
+        </span>
+      </div>
+
+      <!-- Close Button -->
+      <button
+        (click)="closeLoginModal()"
+        class="absolute top-2 right-4 text-gray-400 text-2xl hover:text-gray-600"
+      >
+        &times;
+      </button>
+    </div>
+  </div>
+
+  <!-- Signup Modal -->
+  <div
+    id="signup-modal"
+    class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+    (click)="closeSignupModal()"
+  >
+    <div
+      class="bg-white p-8 rounded-2xl shadow-2xl w-96 relative animate-fadeIn"
+      (click)="$event.stopPropagation()"
+    >
+      <h2 class="text-3xl font-arvo-bold text-center text-[#5c2a4a] mb-6">
+        Signup
+      </h2>
+
+      <!-- Signup Form -->
+      <form
+        (ngSubmit)="onSignup(name.value, email.value, password.value)"
+        class="space-y-4"
+      >
+        <input
+          #name
+          type="text"
+          placeholder="Name"
+          class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-[#5c2a4a]"
+          required
+        />
+        <input
+          #email
+          type="email"
+          placeholder="Email"
+          class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-[#5c2a4a]"
+          required
+        />
+        <input
+          #password
+          type="password"
+          placeholder="Password"
+          class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-[#5c2a4a]"
+          required
+        />
+        <button
+          type="submit"
+          class="w-full bg-[#5c2a4a] text-white py-3 rounded-md hover:bg-[#7c3c64] transition"
+        >
+          Signup
+        </button>
+      </form>
+
+      <!-- Social Buttons -->
+      <div class="flex justify-center gap-4 mt-6">
+        <!-- Google -->
+        <button
+          class="bg-red-600 text-white p-3 rounded-full hover:bg-red-700 transition"
+          aria-label="Google Login"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 48 48"
+            class="w-5 h-5 fill-white"
+          >
+            <path
+              d="M44.5 20H24v8.5h11.9C34.3 33.5 29.7 37 24 37c-7 0-13-6-13-13s6-13 13-13c3.3 0 6.3 1.2 8.6 3.4l6.4-6.4C34.4 4.5 29.5 2 24 2 12.3 2 2.5 11.8 2.5 23.5S12.3 45 24 45c11.2 0 21.5-8.5 21.5-21.5 0-1.6-.2-3.2-.5-4.5z"
+            />
+          </svg>
+        </button>
+
+        <!-- Facebook -->
+        <button
+          class="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition"
+          aria-label="Facebook Login"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 32 32"
+            class="w-5 h-5 fill-white"
+          >
+            <path
+              d="M19 6h5V0h-5c-5 0-8 3.3-8 8v4H6v6h5v14h6V18h5l1-6h-6v-3c0-1.7.6-3 3-3z"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Switch to Login -->
+      <div class="text-center text-sm mt-4 text-gray-600">
+        Already have an account?
+        <span
+          class="text-[#5c2a4a] font-medium cursor-pointer"
+          (click)="closeSignupModal(); openLoginModal()"
+        >
+          Login
+        </span>
+      </div>
+
+      <!-- Close Button -->
+      <button
+        (click)="closeSignupModal()"
+        class="absolute top-2 right-4 text-gray-400 text-2xl hover:text-gray-600"
+      >
+        &times;
+      </button>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,102 @@
+<div class="px-4 sm:px-6 lg:px-10 py-6" [@listAnimation]="apptDashboard">
+  <!-- Title -->
+  <div class="flex justify-center">
+    <p class="text-3xl font-bold tracking-tight text-gray-800 font-arvo-bold">
+      COUNTRIES
+    </p>
+  </div>
+
+  <!-- Country Carousel -->
+  <div class="mt-6">
+    <div class="relative max-w-7xl mx-auto px-2 sm:px-4 py-4">
+      <div
+        #carouselContainer
+        class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth -ml-2"
+        style="overflow: hidden"
+      >
+        <div
+          *ngFor="let area of areas"
+          (click)="onAreaSelect(area.strArea)"
+          class="flex flex-col items-center justify-center min-w-[calc(25%-0.75rem)] sm:min-w-[calc(20%-0.75rem)] snap-start cursor-pointer"
+        >
+          <div
+            class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden shadow-md border-4"
+            [ngClass]="{
+              'border-purple-600': selectedArea === area.strArea,
+              'border-transparent': selectedArea !== area.strArea
+            }"
+          >
+            <img
+              [src]="'https://flagcdn.com/w80/' + areaToCode[area.strArea]?.toLowerCase() + '.png'"
+              [alt]="area.strArea"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <h2 class="text-xs sm:text-sm font-bold mt-2 text-center uppercase">
+            {{ area.strArea }}
+          </h2>
+        </div>
+      </div>
+
+      <!-- Left Arrow -->
+      <button
+        *ngIf="areas.length > 0"
+        class="absolute left-1 top-1/2 -translate-y-1/2 bg-gray-100 text-gray-700 rounded-full shadow-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+        (click)="scrollLeft()"
+      >
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+      <!-- Right Arrow -->
+      <button
+        *ngIf="areas.length > 0"
+        class="absolute right-1 top-1/2 -translate-y-1/2 bg-gray-100 text-gray-700 rounded-full shadow-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+        (click)="scrollRight()"
+      >
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Alphabet Filters -->
+  <div class="flex flex-wrap justify-center gap-2 mt-6 px-2">
+    <button
+      *ngFor="let letter of alphabet"
+      class="px-3 py-1 rounded-full shadow-sm border font-semibold transition-all duration-200 text-sm"
+      [ngClass]="{
+        'bg-purple-600 text-white border-purple-600': selectedLetter === letter,
+        'bg-gray-100 text-gray-800 hover:bg-purple-200 border-gray-300': selectedLetter !== letter
+      }"
+      (click)="onAlphabetSelect(letter)"
+    >
+      {{ letter }}
+    </button>
+  </div>
+
+  <!-- Loader -->
+  <app-loading *ngIf="loading"></app-loading>
+
+  <!-- Meals Grid -->
+  <div
+    *ngIf="!loading && meals.length > 0"
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6 px-2"
+  >
+    <app-meal-card
+      *ngFor="let meal of meals"
+      [meal]="meal"
+      [showCategory]="false"
+    ></app-meal-card>
+  </div>
+
+  <!-- No Results Message -->
+  <div
+    *ngIf="!loading && (!meals || meals.length === 0)"
+    class="text-center text-gray-500 mt-6 text-sm"
+  >
+    No recipes found for this selection.
+  </div>
+</div>

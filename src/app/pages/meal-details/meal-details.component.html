@@ -1,0 +1,68 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-[#4b2e18] font-sans space-y-16 animate-fadeIn" [@listAnimation]="apptDashboard">
+
+  <!-- Title + Image -->
+  <div class="text-center space-y-4">
+    <h1 class="text-3xl sm:text-4xl md:text-5xl uppercase font-extrabold tracking-wide">
+      {{ meal?.strMeal }}
+    </h1>
+    <p class="text-base sm:text-lg italic text-[#7a4b33] font-serif">
+      A delicious journey into flavors 🌿
+    </p>
+    <img
+      [src]="meal?.strMealThumb"
+      [alt]="meal?.strMeal"
+      class="mx-auto w-full max-w-3xl rounded-3xl shadow-2xl border-4 border-orange-100 object-cover"
+    />
+  </div>
+
+  <!-- Instructions & Ingredients -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+    <!-- Instructions -->
+    <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+      <h2 class="text-2xl sm:text-3xl font-arvo-bold mb-4 border-b-2 pb-2 border-purple-800 flex items-center gap-2">
+        <i class="fas fa-clipboard-list text-purple-700"></i>
+        Instructions
+      </h2>
+      <p class="whitespace-pre-line leading-relaxed text-base text-gray-800">
+        {{ meal?.strInstructions }}
+      </p>
+    </div>
+
+    <!-- Ingredients -->
+    <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+      <h2 class="text-2xl sm:text-3xl font-arvo-bold mb-4 border-b-2 pb-2 border-purple-800 flex items-center gap-2">
+        <i class="fas fa-utensils text-purple-700"></i>
+        Ingredients
+      </h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        <div
+          *ngFor="let ing of getIngredientsWithImages()"
+          class="flex flex-col items-center text-center bg-orange-50 p-4 rounded-lg shadow hover:shadow-xl transition-transform hover:scale-105"
+        >
+          <img
+            [src]="ing.image"
+            [alt]="ing.name"
+            class="w-16 h-16 object-contain mb-2"
+          />
+          <span class="text-sm font-semibold text-[#5e2a0a]">{{ ing.name }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recipe Video -->
+  <div *ngIf="videoUrl" class="pt-10 border-t border-orange-200 space-y-6">
+    <h2 class="text-2xl sm:text-3xl font-arvo-bold text-center text-[#5c2a4a] flex items-center justify-center gap-2">
+      <i class="fas fa-video text-red-600"></i>
+      Watch Recipe Video
+    </h2>
+    <div class="relative w-full pb-[56.25%]">
+      <iframe
+        [src]="videoUrl"
+        frameborder="0"
+        allowfullscreen
+        class="absolute top-0 left-0 w-full h-full rounded-xl shadow-lg"
+      ></iframe>
+    </div>
+  </div>
+</div>
