@@ -62,3 +62,22 @@ body {
   font-weight: normal;
   font-style: normal;
 }
+
+/* Style the Google Translate gadget wrapper */
+.goog-te-gadget-simple {
+  @apply bg-white text-gray-800 px-3 py-1 rounded-lg border border-gray-300 shadow-sm !important;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Optional: Hide the ugly Google logo (if you don't mind their T&C) */
+.goog-logo-link, .goog-te-gadget span {
+  display: none !important;
+}
+
+/* Shrink the iframe */
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+body {
+  top: 0px !important;
+}
