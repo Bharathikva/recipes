@@ -23,6 +23,7 @@ export class HeaderComponent implements AfterViewInit, OnInit {
   constructor(private authService: AuthService, private router:Router, private modalService: ModalService) {}
   user: any = null;
   showDropdown = false;
+  isMobileMenuOpen: boolean = false;
 
   ngAfterViewInit() {
     const menuBtn = document.getElementById('mobile-menu-button');
@@ -71,8 +72,20 @@ fetchUser() {
   showLangHint = true;
 
   toggleLanguage() {
-    this.currentLang = this.currentLang === 'en' ? 'ta' : 'en';
-    localStorage.setItem('siteLanguage', this.currentLang);
+    const googleTranslateElement = document.querySelector('.goog-te-gadget-simple');
+    if (googleTranslateElement) {
+      googleTranslateElement.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    }
+  }
+  
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+    this.showDropdown = false; // close dropdown when opening menu
+  }
+
+  closeMobileMenu() {
+    this.isMobileMenuOpen = false;
+    this.showDropdown = false;
   }
 
   // Open and close login modal

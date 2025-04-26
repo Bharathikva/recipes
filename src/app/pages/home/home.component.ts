@@ -9,10 +9,11 @@ import { RouterModule } from '@angular/router';
 import { CategoriesComponent } from "../categories/categories.component";
 import {animate, keyframes, query, stagger, style, transition, trigger} from '@angular/animations';
 import { MealCardComponent } from "../../components/meal-card/meal-card.component";
+import { LandingComponent } from "../../components/landing/landing.component";
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, CategoriesComponent, MealCardComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, CategoriesComponent, MealCardComponent, LandingComponent],
   providers: [],
   standalone: true,
   templateUrl: './home.component.html',

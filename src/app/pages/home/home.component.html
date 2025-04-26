@@ -1,23 +1,19 @@
-<div class="min-h-screen px-4 py-6" [@listAnimation]="apptDashboard">
+<div class="min-h-screen px-4 py-2" [@listAnimation]="apptDashboard">
   <!-- Title Section -->
-  <div class="flex flex-col sm:flex-row items-center justify-center text-center gap-2 sm:gap-4 py-6">
-    <p
-    class="text-xl font-bold tracking-tight text-gray-800 mr-2 mt-3 font-arvo-bold"
-  >
-    SIMPLE & EASY MEALS FOR
-  </p>
-  <p class="text-3xl italic text-purple-600 font-drama-regular">
-    real, actual, everyday life.
-  </p>
-  </div>
+  <app-landing></app-landing>
 
+  <div class="flex flex-col sm:flex-row items-center justify-center text-center gap-2 sm:gap-4 py-6">
+    <p class="text-xl font-bold tracking-tight text-gray-800 mr-2 mt-3 font-arvo-bold">
+      SIMPLE & EASY MEALS FOR
+    </p>
+    <p class="text-3xl italic text-purple-600 font-drama-regular">
+      real, actual, everyday life.
+    </p>
+  </div>
   <!-- Featured Meals Grid (Top 4) -->
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-    <app-meal-card
-      *ngFor="let meal of specialMeals | slice : 0 : 4"
-      [meal]="meal"
-      [showCategory]="false"
-    ></app-meal-card>
+    <app-meal-card *ngFor="let meal of specialMeals | slice : 0 : 4" [meal]="meal"
+      [showCategory]="false"></app-meal-card>
   </div>
 
   <!-- Categories Section -->
@@ -60,10 +56,6 @@
 
   <!-- All Recipes Grid -->
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 py-10">
-    <app-meal-card
-      *ngFor="let meal of specialMeals"
-      [meal]="meal"
-      [showCategory]="true"
-    ></app-meal-card>
+    <app-meal-card *ngFor="let meal of specialMeals" [meal]="meal" [showCategory]="true"></app-meal-card>
   </div>
 </div>
