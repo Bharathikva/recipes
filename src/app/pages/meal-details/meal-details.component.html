@@ -1,68 +1,198 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-[#4b2e18] font-sans space-y-16 animate-fadeIn" [@listAnimation]="apptDashboard">
-
-  <!-- Title + Image -->
-  <div class="text-center space-y-4">
-    <h1 class="text-3xl sm:text-4xl md:text-5xl uppercase font-extrabold tracking-wide">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 font-sans animate-fadeIn" [@listAnimation]="apptDashboard">
+  <!-- Recipe Header -->
+  <div class="text-center mb-12 space-y-6">
+    <div class="inline-flex items-center bg-orange-100 text-orange-800 px-4 py-2 rounded-full text-sm font-medium mb-4">
+      <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd" />
+      </svg>
+      {{ meal?.strCategory }} • {{ meal?.strArea }}
+    </div>
+    
+    <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 tracking-tight font-serif">
       {{ meal?.strMeal }}
     </h1>
-    <p class="text-base sm:text-lg italic text-[#7a4b33] font-serif">
-      A delicious journey into flavors 🌿
-    </p>
-    <img
-      [src]="meal?.strMealThumb"
-      [alt]="meal?.strMeal"
-      class="mx-auto w-full max-w-3xl rounded-3xl shadow-2xl border-4 border-orange-100 object-cover"
-    />
-  </div>
-
-  <!-- Instructions & Ingredients -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-    <!-- Instructions -->
-    <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
-      <h2 class="text-2xl sm:text-3xl font-arvo-bold mb-4 border-b-2 pb-2 border-purple-800 flex items-center gap-2">
-        <i class="fas fa-clipboard-list text-purple-700"></i>
-        Instructions
-      </h2>
-      <p class="whitespace-pre-line leading-relaxed text-base text-gray-800">
-        {{ meal?.strInstructions }}
-      </p>
-    </div>
-
-    <!-- Ingredients -->
-    <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
-      <h2 class="text-2xl sm:text-3xl font-arvo-bold mb-4 border-b-2 pb-2 border-purple-800 flex items-center gap-2">
-        <i class="fas fa-utensils text-purple-700"></i>
-        Ingredients
-      </h2>
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-        <div
-          *ngFor="let ing of getIngredientsWithImages()"
-          class="flex flex-col items-center text-center bg-orange-50 p-4 rounded-lg shadow hover:shadow-xl transition-transform hover:scale-105"
-        >
-          <img
-            [src]="ing.image"
-            [alt]="ing.name"
-            class="w-16 h-16 object-contain mb-2"
-          />
-          <span class="text-sm font-semibold text-[#5e2a0a]">{{ ing.name }}</span>
-        </div>
+    
+    <div class="flex flex-wrap justify-center gap-4 text-sm sm:text-base">
+      <div class="flex items-center text-amber-600">
+        <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+          <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+        </svg>
+        {{ getIngredients().length }} Ingredients
+      </div>
+      <div class="flex items-center text-emerald-600">
+        <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        ~30 mins prep
+      </div>
+      <div class="flex items-center text-rose-600">
+        <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+        </svg>
+        4.8 (124 reviews)
       </div>
     </div>
   </div>
 
-  <!-- Recipe Video -->
-  <div *ngIf="videoUrl" class="pt-10 border-t border-orange-200 space-y-6">
-    <h2 class="text-2xl sm:text-3xl font-arvo-bold text-center text-[#5c2a4a] flex items-center justify-center gap-2">
-      <i class="fas fa-video text-red-600"></i>
-      Watch Recipe Video
-    </h2>
+  <!-- Hero Image -->
+  <div class="relative mb-16 rounded-3xl overflow-hidden shadow-2xl">
+    <img
+      [src]="meal?.strMealThumb"
+      [alt]="meal?.strMeal"
+      class="w-full h-auto object-cover aspect-[4/3] sm:aspect-[16/9]"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
+      <div class="text-white max-w-2xl">
+        <p class="text-lg sm:text-xl italic mb-4 font-serif">
+          "{{ getRandomQuote() }}"
+        </p>
+        <button class="bg-white text-orange-600 hover:bg-orange-50 font-medium py-2 px-6 rounded-full shadow-md transition flex items-center">
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
+          </svg>
+          Save Recipe
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+    <!-- Ingredients Card -->
+    <div class="lg:col-span-1 bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+      <div class="bg-gradient-to-r from-orange-500 to-amber-500 p-6">
+        <h2 class="text-2xl font-bold text-white flex items-center">
+          <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+          Ingredients
+        </h2>
+        <p class="text-orange-100 mt-1">For {{ getServings() }} servings</p>
+      </div>
+      
+      <div class="p-6">
+        <ul class="space-y-4">
+          <li *ngFor="let ing of getIngredientsWithImages()" class="flex items-start">
+            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-orange-50 flex items-center justify-center mr-4">
+              <img [src]="ing.image" [alt]="ing.name" class="h-6 w-6 object-contain" />
+            </div>
+            <div>
+              <p class="font-medium text-gray-900">{{ ing.name.split(' - ')[0] }}</p>
+              <p class="text-sm text-gray-500">{{ ing.name.split(' - ')[1] }}</p>
+            </div>
+          </li>
+        </ul>
+        
+        <div class="mt-8 pt-6 border-t border-gray-200">
+          <h3 class="text-lg font-medium mb-3">Kitchen Tools</h3>
+          <div class="grid grid-cols-3 gap-3">
+            <div *ngFor="let tool of ['Skillet', 'Mixing Bowl', 'Whisk', 'Knife', 'Cutting Board', 'Measuring Cups']" 
+                 class="bg-gray-50 rounded-lg p-3 text-center text-sm font-medium">
+              {{ tool }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Instructions Card -->
+    <div class="lg:col-span-2 space-y-8">
+      <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <svg class="w-6 h-6 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          Cooking Instructions
+        </h2>
+        
+        <div class="prose max-w-none">
+          <ol class="space-y-6">
+            <li *ngFor="let step of getInstructionsSteps()" class="flex">
+              <span class="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-purple-100 text-purple-800 font-bold mr-4 mt-0.5">
+                {{ step.step }}
+              </span>
+              <p>{{ step.text }}</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+      
+      <!-- Chef's Tips -->
+      <div class="bg-amber-50 rounded-xl shadow-lg p-8 border border-amber-100">
+        <div class="flex items-start">
+          <div class="flex-shrink-0 mr-4">
+            <div class="h-12 w-12 rounded-full bg-amber-200 flex items-center justify-center text-amber-800 font-bold">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-amber-900 mb-2">Chef's Pro Tip</h3>
+            <p class="text-amber-800">For an extra flavor boost, try adding a teaspoon of smoked paprika to the sauce. It adds a wonderful depth of flavor that complements the other ingredients beautifully.</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Nutrition Info -->
+      <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <svg class="w-6 h-6 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+          </svg>
+          Nutrition Information
+        </h2>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div *ngFor="let item of getNutritionInfo()" class="bg-gray-50 rounded-lg p-4 text-center">
+            <p class="text-sm text-gray-500">{{ item.label }}</p>
+            <p class="text-lg font-bold text-gray-900">{{ item.value }}</p>
+          </div>
+        </div>
+        
+        <p class="text-sm text-gray-500 mt-4 italic">* Percent Daily Values are based on a 2000 calorie diet.</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Video Section -->
+  <div *ngIf="videoUrl" class="mt-16 bg-gray-900 rounded-2xl overflow-hidden shadow-2xl">
+    <div class="p-6 sm:p-8 text-center">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mb-2 flex items-center justify-center">
+        <svg class="w-8 h-8 mr-3 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v8a2 2 0 01-2 2h-2a2 2 0 01-2-2V6z" />
+        </svg>
+        Watch the Recipe Video
+      </h2>
+      <p class="text-gray-300 max-w-2xl mx-auto">Follow along with our step-by-step video guide to perfect this dish every time.</p>
+    </div>
     <div class="relative w-full pb-[56.25%]">
       <iframe
         [src]="videoUrl"
         frameborder="0"
         allowfullscreen
-        class="absolute top-0 left-0 w-full h-full rounded-xl shadow-lg"
+        class="absolute top-0 left-0 w-full h-full"
       ></iframe>
+    </div>
+  </div>
+  
+  <!-- Similar Recipes -->
+  <div class="mt-16">
+    <h2 class="text-2xl font-bold mb-8 text-center">You Might Also Like</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div *ngFor="let similar of getSimilarRecipes()" class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-transform hover:-translate-y-1 border border-gray-100">
+        <img [src]="similar.image" [alt]="similar.name" class="w-full h-48 object-cover" />
+        <div class="p-5">
+          <h3 class="font-bold text-lg mb-2">{{ similar.name }}</h3>
+          <div class="flex items-center text-sm text-gray-500">
+            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+            </svg>
+            {{ similar.time }}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
